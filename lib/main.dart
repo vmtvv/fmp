@@ -1,41 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Rainbow Maker'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -44,68 +23,129 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final List<String> colorNames = <String>[
+    'Grapefruit',
+    'Bittersweet',
+    'Sunflower',
+    'Grass',
+    'Mint',
+    'Aqua',
+    'Blue Jeans',
+    'Lavander',
+    'Pink Rose'
+  ];
+  final List<int> colorCodes = <int>[
+    0xFFED5565,
+    0xFFFC6E51,
+    0xFFFFCE54,
+    0xFFADD468,
+    0xFF48CFAD,
+    0xFF4FC1E9,
+    0xFF5D9CEC,
+    0xFFAC92EC,
+    0xFFEC87C0
+  ];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final Set<int> _selectedColors = Set<int>();
+
+  /*final colorsMap = const {
+    'Grapefruit': 0xED5565,
+    'Bittersweet ': 0xFC6E51,
+    'Sunflower': 0xFFCE54,
+    'Grass': 0xADD468,
+    'Mint': 0x48CFAD,
+    'Aqua': 0x4FC1E9,
+    'Blue Jeans': 0x5D9CEC,
+    'Lavander': 0xAC92EC,
+    'Pink Rose': 0xEC87C0,
+  };*/
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(widget.title),
+        ),
+        child: _buildRainbow());
+  }
+
+  Widget _buildRainbow() {
+    return SafeArea(
+        top: true,
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.all(8),
+                itemCount: colorNames.length,
+                itemBuilder: _buildRow,
+                separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            Center(
+                child:
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: CupertinoButton.filled(
+                    child: Text('Make'),
+                    onPressed: () => { },
+                  ),
+                )
+            )
+          ],
+        )
+    );
+  }
+
+  Widget _buildRow(BuildContext context, int index) {
+    final int colorCode = colorCodes[index];
+    final bool alreadySelected = _selectedColors.contains(colorCode);
+
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(colorCode),
+          boxShadow: [
+            BoxShadow(
+                color: Color(0x4D000000),
+                blurRadius: 3.0,
+                offset: Offset(2.0, 2.0)
             ),
           ],
         ),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              alreadySelected ? Icons.check_box : Icons.check_box_outline_blank,
+              color: Colors.white,
+            ),
+            Text(
+              colorNames[index],
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            Text(
+                '#' + colorCode.toRadixString(16).toUpperCase(),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      onTap:  () {
+        setState(() {
+          if (alreadySelected) {
+            _selectedColors.remove(colorCode);
+          } else {
+            _selectedColors.add(colorCode);
+          }
+        });
+      },
     );
   }
 }

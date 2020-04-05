@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fmp/app_routes.dart';
+import 'package:fmp/details_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,21 +10,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Flutter Demo',
-      home: MyHomePage(title: 'Rainbow Maker'),
+      initialRoute: AppRoutes.home,
+      routes: {
+        AppRoutes.home: (context) => HomePage(title: 'Rainbow Maker'),
+        AppRoutes.details: (context) => DetailsPage(title: 'Details')
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   final List<String> colorNames = <String>[
     'Grapefruit',
     'Bittersweet',
@@ -89,7 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.all(8),
                   child: CupertinoButton.filled(
                     child: Text('Make'),
-                    onPressed: () => { },
+                    onPressed: () {
+                      _navigateAndDisplayResult(context);
+                    },
                   ),
                 )
             )
@@ -148,4 +156,36 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
+
+  _navigateAndDisplayResult(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed(AppRoutes.details);
+
+    if (result != null) {
+      await _showAlertDialog(result);
+    }
+  }
+
+  Future<void> _showAlertDialog(String message) async {
+    return showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('Fetched result'),
+          content: Text(message),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+
+
+
+

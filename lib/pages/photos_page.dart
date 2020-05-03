@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fmp/models/photo.dart';
+import 'package:fmp/routes/app_routes.dart';
 import 'package:fmp/services/photos_service.dart';
 
 class PhotosPage extends StatelessWidget {
@@ -70,6 +71,13 @@ class PhotosPage extends StatelessWidget {
           ),
         ),
       ),
+      onTap: () {
+        _openPhotoDetails(context, photo);
+      },
     );
+  }
+
+  _openPhotoDetails(BuildContext context, Photo photo) {
+    Navigator.of(context).pushNamed(AppRoutes.photoDetails, arguments: photo);
   }
 }

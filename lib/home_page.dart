@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: EdgeInsets.all(8),
                   child: CupertinoButton.filled(
-                    child: Text('Make'),
+                    child: Text('Open details'),
                     onPressed: () {
                       _navigateAndDisplayResult(context);
                     },

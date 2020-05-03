@@ -26,10 +26,12 @@ class InfoPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          _buildNavigationButton(context, "Show definition",
-              "Open web page with rainbow description", AppRoutes.definition),
-          _buildNavigationButton(context, "Open map",
-              "Show rainbow city location on the map", AppRoutes.map),
+          _buildNavigationButton(context, "What is the Rainbow?",
+              "Open web page and find out", AppRoutes.definition),
+          _buildNavigationButton(context, "Where is it?",
+              "Find Rainbow City on the map", AppRoutes.map),
+          _buildNavigationButton(context, "How to make",
+              "Watch how to create your own rainbow", AppRoutes.instruction),
         ],
       ),
     );

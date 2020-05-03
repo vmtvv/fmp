@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fmp/app_routes.dart';
+import 'package:fmp/routes/app_routes.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -48,32 +48,41 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildRainbow() {
     return SafeArea(
-        top: true,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.all(8),
-                itemCount: colorNames.length,
-                itemBuilder: _buildRow,
-                separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-              ),
+      top: true,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(8),
+              itemCount: colorNames.length,
+              itemBuilder: _buildRow,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
             ),
-            Center(
-                child:
-                Container(
-                  padding: EdgeInsets.all(8),
-                  child: CupertinoButton.filled(
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: <Widget>[
+                  CupertinoButton.filled(
                     child: Text('Open details'),
                     onPressed: () {
-                      _navigateAndDisplayResult(context);
+                      _navigateAndDisplayResult(context, AppRoutes.details);
                     },
                   ),
-                )
-            )
-          ],
-        )
+                  CupertinoButton.filled(
+                    child: Text('Show Photos'),
+                    onPressed: () {
+                      _navigateAndDisplayResult(context, AppRoutes.photos);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -89,8 +98,7 @@ class _HomePageState extends State<HomePage> {
             BoxShadow(
                 color: Color(0x4D000000),
                 blurRadius: 3.0,
-                offset: Offset(2.0, 2.0)
-            ),
+                offset: Offset(2.0, 2.0)),
           ],
         ),
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
@@ -105,18 +113,16 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               colorNames[index],
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
-            Text(
-                '#' + colorCode.toRadixString(16).toUpperCase(),
+            Text('#' + colorCode.toRadixString(16).toUpperCase(),
                 style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
+                    color: Colors.white, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
-      onTap:  () {
+      onTap: () {
         setState(() {
           if (alreadySelected) {
             _selectedColors.remove(colorCode);
@@ -128,8 +134,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _navigateAndDisplayResult(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(AppRoutes.details);
+  _navigateAndDisplayResult(BuildContext context, String routeName) async {
+    final result = await Navigator.of(context).pushNamed(routeName);
 
     if (result != null) {
       await _showAlertDialog(result);

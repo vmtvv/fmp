@@ -21,12 +21,26 @@ class PhotoDetailsPage extends StatelessWidget {
   Widget _buildPage(Photo photo) {
     return SafeArea(
       top: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Image(image: NetworkImage(photo.url)),
-          Text(photo.title),
-        ],
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Image(
+              image: NetworkImage(photo.url),
+              width: 300,
+              height: 300,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                photo.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

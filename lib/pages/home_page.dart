@@ -41,7 +41,10 @@ class _HomePageState extends State<HomePage> {
               onGenerateRoute: (settings) {
                 switch (settings.name) {
                   case AppRoutes.photoDetails:
-                    CupertinoPageRoute(builder: (context) => PhotoDetailsPage(title: "Photo Details"));
+                    return CupertinoPageRoute(
+                        settings: settings,
+                        builder: (context) =>
+                            PhotoDetailsPage(title: "Photo Details"));
                 }
               },
               builder: (BuildContext context) {

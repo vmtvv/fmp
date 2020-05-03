@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fmp/pages/definition_page.dart';
+import 'package:fmp/pages/info_page.dart';
 import 'package:fmp/pages/maker_page.dart';
 import 'package:fmp/pages/photos_page.dart';
 import 'package:fmp/routes/app_routes.dart';
@@ -26,6 +28,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.photo),
             title: Text("Photos"),
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            title: Text("Info"),
+          ),
         ],
       ),
       tabBuilder: (BuildContext context, int index) {
@@ -41,11 +47,23 @@ class _HomePageState extends State<HomePage> {
               onGenerateRoute: (settings) {
                 switch (settings.name) {
                   case AppRoutes.photoDetails:
-                    CupertinoPageRoute(builder: (context) => PhotoDetailsPage(title: "Photo Details"));
+                    return CupertinoPageRoute(builder: (context) => PhotoDetailsPage(title: "Photo Details"));
                 }
               },
               builder: (BuildContext context) {
                 return PhotosPage(title: "Photos");
+              },
+            );
+          case 2:
+            return CupertinoTabView(
+              onGenerateRoute: (settings) {
+                switch (settings.name) {
+                  case AppRoutes.definition:
+                    return CupertinoPageRoute(builder: (context) => DefinitionPage(title: "Definition"));
+                }
+              },
+              builder: (BuildContext context) {
+                return InfoPage(title: "Info");
               },
             );
         }

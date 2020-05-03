@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fmp/pages/definition_page.dart';
 import 'package:fmp/pages/info_page.dart';
+import 'package:fmp/pages/instruction_page.dart';
 import 'package:fmp/pages/maker_page.dart';
 import 'package:fmp/pages/map_page.dart';
 import 'package:fmp/pages/photos_page.dart';
@@ -63,6 +64,8 @@ class _HomePageState extends State<HomePage> {
                     return CupertinoPageRoute(builder: (context) => DefinitionPage(title: "Definition"));
                   case AppRoutes.map:
                     return CupertinoPageRoute(builder: (context) => MapPage(title: "Rainbow Locator"));
+                  case AppRoutes.instruction:
+                    return CupertinoPageRoute(builder: (context) => InstructionPage(title: "Instruction"));
                 }
               },
               builder: (BuildContext context) {

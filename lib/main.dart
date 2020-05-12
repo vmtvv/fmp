@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fmp/app_routes.dart';
-import 'package:fmp/details_page.dart';
-import 'package:fmp/home_page.dart';
-import 'package:fmp/rotation_route.dart';
+import 'package:fmp/routes/app_routes.dart';
+import 'package:fmp/pages/home_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,11 +14,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name){
           case AppRoutes.home:
-            return CupertinoPageRoute(builder: (context) => HomePage(title: "Rainbow Maker"));
-            break;
-          case AppRoutes.details:
-            return RotationRoute(page: DetailsPage(title: "Details"));
-            break;
+            return CupertinoPageRoute(builder: (context) => HomePage());
         }
       },
     );

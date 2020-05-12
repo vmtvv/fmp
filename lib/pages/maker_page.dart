@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fmp/localization/AppLocalizations.dart';
 
 class MakerPage extends StatefulWidget {
-  MakerPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MakerPage({Key key}) : super(key: key);
 
   @override
   _MakerPageState createState() => _MakerPageState();
@@ -40,7 +39,7 @@ class _MakerPageState extends State<MakerPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: Text(widget.title),
+          middle: Text(AppLocalizations.of(context).makerTitle),
         ),
         child: _buildRainbow());
   }

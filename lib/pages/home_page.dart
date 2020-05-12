@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           case 0:
             return CupertinoTabView(
               builder: (BuildContext context) {
-                return MakerPage(title: "Maker");
+                return MakerPage();
               },
             );
           case 1:

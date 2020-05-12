@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fmp/app_routes.dart';
+import 'package:fmp/routes/app_routes.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _navigateAndDisplayResult(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(AppRoutes.details);
+    final result = await Navigator.of(context).pushNamed(AppRoutes.maker);
 
     if (result != null) {
       await _showAlertDialog(result);
